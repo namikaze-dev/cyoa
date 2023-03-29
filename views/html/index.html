@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choose Your Own Adventure</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="story">
+        {{range .Story}}
+        <p>{{ . }}</p>
+        {{end}}
+      </div>
+      <div class="options">
+        {{range .Options}}
+        <div class="options">
+          <p>{{ .Text }}</p>
+          <p><a href="/{{ .Arc }}">Click to visit ARC</a></p>
+        </div>
+        {{end}}
+      </div>
+    </div>
+  </body>
+</html>
