@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	web "github.com/namikaze-dev/cyoa/cmd/web"
+	"github.com/namikaze-dev/cyoa/internal/store"
 )
 
 func TestHandler(t *testing.T) {
@@ -66,7 +67,7 @@ func assertEqual(t *testing.T, got, want any) {
 	}
 }
 
-var testStoryStore = map[string]web.Story{
+var testStoryStore = map[string]store.Story{
 	"intro": {
 		Title: "Title 1",
 		Story: []string{
@@ -74,7 +75,7 @@ var testStoryStore = map[string]web.Story{
 			"story line 2",
 			"story line 3",
 		},
-		Options: []web.StoryOption{
+		Options: []store.StoryOption{
 			{
 				Text: "text 1",
 				Arc:  "valley",
@@ -87,7 +88,7 @@ var testStoryStore = map[string]web.Story{
 			"story line 1",
 			"story line 2",
 		},
-		Options: []web.StoryOption{
+		Options: []store.StoryOption{
 			{
 				Text: "start",
 				Arc:  "intro",

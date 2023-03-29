@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/namikaze-dev/cyoa/views"
+	"github.com/namikaze-dev/cyoa/internal/store"
 )
 
 type Options struct {
@@ -15,7 +16,7 @@ type Options struct {
 
 func main() {
 	options := parseFlags()
-	store, err := NewStoryStore(openFile(options.Source))
+	store, err := store.NewStoryStore(openFile(options.Source))
 	if err != nil {
 		HandleFatalError(err)
 	}
