@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 	"os"
@@ -8,14 +9,13 @@ import (
 	"github.com/namikaze-dev/cyoa/views"
 )
 
-func main() {
-	args := os.Args
-	if len(args) < 2 {
-		fmt.Println("cyoa: missing required json story store argument")
-		os.Exit(1)
-	}
+type Options struct {
+	Source, Addr string
+}
 
-	store, err := NewStoryStore(openFile(args[1]))
+func main() {
+	options := parseFlags()
+	store, err := NewStoryStore(openFile(options.Source))
 	if err != nil {
 		HandleFatalError(err)
 	}
@@ -30,8 +30,18 @@ func main() {
 	mux.Handle("/static/", fileServer)
 	mux.Handle("/", &handler)
 
-	err = http.ListenAndServe(":8000", mux)
+	err = http.ListenAndServe(options.Addr, mux)
 	HandleFatalError(err)
+}
+
+func parseFlags() Options {
+	var options Options
+
+	flag.StringVar(&options.Addr, "addr", ":8000", "http server address")
+	flag.StringVar(&options.Source, "json", "", "json file containing story data")
+	flag.Parse()
+
+	return options
 }
 
 func openFile(fn string) *os.File {
